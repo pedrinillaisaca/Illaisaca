@@ -1,4 +1,4 @@
-# CorreccionExamen
+# Examen
 ## Jps_ingreso_de_pedidos
 
 ![uno](capturas/1.png)
