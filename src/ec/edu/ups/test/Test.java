@@ -22,9 +22,9 @@ public class Test {
 		
 		Pedido p=new Pedido();
 		p.setCliente("pedro");
-		Comida c=new Comida("wefasd",2.34);
-		Comida c2=new Comida("wefasd",2.34);
-		Comida c3=new Comida("wefasd",2.34);
+		Comida c=new Comida(0,"wefasd",2.34);
+		Comida c2=new Comida(1,"wefasd",5.23);
+		Comida c3=new Comida(2,"wefasd",6.42);
 		
 		
 		
@@ -33,7 +33,7 @@ public class Test {
 		p.addProducts(c3);
 		
 		
-		p.setTargeta(t);
+		//p.setTargeta(t);
 		
 		PedidoDAO pedidoDAO=DAOFactory.getFactory().getPedidoDAO();
 		pedidoDAO.create(p);

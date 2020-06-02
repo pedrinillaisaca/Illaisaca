@@ -23,8 +23,8 @@ public class Comida implements Serializable {
 	@JoinColumn
 	private Pedido pedido;
 
-	public Comida(  String nombre, double precio ) {
-		
+	public Comida( int id, String nombre, double precio ) {
+		this.id=id;
 		this.nombre=nombre;
 		this.precio=precio;
 	}
