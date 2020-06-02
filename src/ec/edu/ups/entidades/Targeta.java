@@ -1,6 +1,11 @@
 package ec.edu.ups.entidades;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 /**
@@ -14,19 +19,21 @@ public class Targeta implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;	
 	private String numero;
 	private String nombre;
 	@Temporal(TemporalType.DATE)
 	private java.util.Calendar fechaCaducidad;
 	private String cvv;
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "targeta")
-	private Pedido pedido;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "targeta")
+	Set<Pedido> pedidos=new HashSet<Pedido>();
 
-	public Targeta( String numero, String nombre,String cvv) {
-		
-		this.nombre=numero;
+	public Targeta( String numero, String nombre,String cvv,Calendar fechaCaducidad) {
+		super();
+		this.numero=numero;
 		this.nombre=nombre;
+		this.fechaCaducidad=fechaCaducidad;
 		this.cvv=cvv;
 	}
 
@@ -66,8 +73,9 @@ public class Targeta implements Serializable {
 	}
 
 
-	public java.util.Calendar getFechaCaducidad() {
-		return fechaCaducidad;
+	public String getFechaCaducidad() {
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyy");		
+		return formato.format(fechaCaducidad.getTime());
 	}
 
 
@@ -84,24 +92,31 @@ public class Targeta implements Serializable {
 	public void setCvv(String cvv) {
 		this.cvv = cvv;
 	}
-
-
-	public Pedido getPedido() {
-		return pedido;
+	public Set<Pedido> getPedidos() {
+		return pedidos;
 	}
 
 
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+	public void setPedidos(Set<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+	
+	
+	public void addPedido(Pedido pedido) {
+		this.pedidos.add(pedido);
+	}
+
+	public void removePedido(Pedido pedido) {
+		this.pedidos.remove(pedido);
 	}
 
 
 	@Override
 	public String toString() {
-		return "Targeta [id=" + id + ", numero=" + numero + ", nombre=" + nombre + ", fechaCaducidad=" + fechaCaducidad
-				+ ", cvv=" + cvv + ", pedido=" + pedido + "]";
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyy");
+		return "Targeta [id=" + id + ", numero=" + numero + ", nombre=" + nombre + ", fechaCaducidad=" + formato.format(fechaCaducidad.getTime())
+				+ ", cvv=" + cvv + ", pedidos=" + pedidos + "]";
 	}
-   
-	
+
 	
 }

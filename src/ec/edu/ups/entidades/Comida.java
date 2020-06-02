@@ -16,17 +16,19 @@ public class Comida implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;		
 	private String nombre;
-	private double precio;
+	private double precio;	
 	@ManyToOne
 	@JoinColumn
 	private Pedido pedido;
 
-	public Comida( int id, String nombre, double precio ) {
-		this.id=id;
+	public Comida( String nombre, double precio, Pedido pedido ) {
+		super();		//
 		this.nombre=nombre;
 		this.precio=precio;
+		this.pedido=pedido;
 	}
 	public Comida() {
 		super();

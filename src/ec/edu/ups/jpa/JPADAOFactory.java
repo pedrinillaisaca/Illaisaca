@@ -25,13 +25,8 @@ public class JPADAOFactory extends DAOFactory{
 	@Override
 	public TargetaDAO getTargetaDAO() {
 		// TODO Auto-generated method stub
-		return (TargetaDAO) new JPATargetaDAO();
+		return new JPATargetaDAO();
 	}
 
-
-
-
-	
-	
 	
 }

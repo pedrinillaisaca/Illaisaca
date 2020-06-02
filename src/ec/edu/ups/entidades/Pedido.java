@@ -1,6 +1,7 @@
 package ec.edu.ups.entidades;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,28 +36,30 @@ public class Pedido implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Set<Comida> comida = new HashSet<Comida>();
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn
 	private Targeta targeta;
 	
-	public Pedido() {
-		
-		
+	public Pedido() {	
+	super();
 	}
-	public Pedido( Calendar fecha, String cliente) {
-		super();
-		
+	public Pedido( Calendar fecha, String cliente, Targeta targeta) {
+		super();		
 		this.fecha=fecha;
 		this.cliente=cliente;
+		this.targeta=targeta;
+		
 	}
-	public int getId() {
+	public int getId() {		
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public java.util.Calendar getFecha() {
-		return fecha;
+	public String getFecha() {
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyy");
+		
+		return formato.format(fecha.getTime());
 	}
 	public void setFecha(java.util.Calendar fecha) {
 		this.fecha = fecha;
@@ -92,17 +95,28 @@ public class Pedido implements Serializable {
 		this.targeta = targeta;
 	}
 	
-	public void addProducts(Comida comida) {
+	public void addComida(Comida comida) {
 		this.comida.add(comida);
 	}
 
 	public void removeComida(Comida comida) {
 		this.comida.remove(comida);
 	}
+	
+	public void calcularComidas() {
+		double s=0;
+		for (Comida comida2 : comida) {
+			s+=comida2.getPrecio();
+		}
+		setTotal(s);
+	}
+
 
 	@Override
 	public String toString() {
-		return "Pedido [id=" + id + ", fecha=" + fecha + ", cliente=" + cliente + ", total=" + total + ", observacion="
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyy");
+		
+		return "Pedido [id=" + id + ", fecha=" + formato.format(fecha.getTime()) + ", cliente=" + cliente + ", total=" + total + ", observacion="
 				+ observacion + ", comida=" + comida + ", targeta=" + targeta + "]";
 	}
 	

@@ -29,7 +29,7 @@ public class JPAGenericDAO<T,ID> implements GenericDAO<T, ID>{
 		try {
 		    em.persist(entity);
 		    em.getTransaction().commit();
-		    System.out.println("CREANDO USUARIO");
+		    System.out.println("*");
 		} catch (Exception e) {
 		    System.out.println(">>>> ERROR:JPAGenericDAO:create " + e);
 		    if (em.getTransaction().isActive())
